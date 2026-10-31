@@ -2,7 +2,7 @@ name: Siteyi yayınla (GitHub Pages)
 on:
   push:
     branches: [main]
-    paths: ['site/**', 'emsile-tezgahi/**', '.github/workflows/pages.yml']
+    paths: ['site/**', 'emsile-ocagi/**', '.github/workflows/pages.yml']
   workflow_dispatch:
 permissions:
   contents: read
