@@ -5,7 +5,11 @@
     "kredi": "Hazırlayan: Hüseyin KAYA · Marmara Üniversitesi İlahiyat Fakültesi",
     "dua": "İstifade edilmesi temennisiyle…",
     "renk": "#0f766e",
-    "ikon": {"glyph": "علم", "bg": "#0f766e", "fg": "#ffffff"}
+    "ikon": {
+      "glyph": "علم",
+      "bg": "#0f766e",
+      "fg": "#ffffff"
+    }
   },
   "programlar": [
     {
@@ -16,7 +20,25 @@
       "arapca": "الْأَمْثِلَةُ الْمُخْتَلِفَةُ",
       "aciklama": "Sarf: kök ocağı, 14 sîga, bâblar, ezber ve 20 oyun. 133 kök, Türkçe anlamlı.",
       "renk": "#d6336c",
-      "ikon": {"glyph": "ف ع ل", "bg": "#161e24", "fg": "#ffc857"}
+      "ikon": {
+        "glyph": "ف ع ل",
+        "bg": "#161e24",
+        "fg": "#ffc857"
+      }
+    },
+    {
+      "id": "bina-sarayi",
+      "klasor": "bina-sarayi",
+      "ad": "Binâ Sarayı",
+      "kisa": "Binâ",
+      "arapca": "بِنَاءُ الْأَفْعَالِ",
+      "aciklama": "Sarf: Tavdîhu Metni Binâi’l-Ef‘âl’in 35 bâbı, ok haritaları, tatbikat tabloları, atölye, 12 oyun ve sınav.",
+      "renk": "#b8860b",
+      "ikon": {
+        "glyph": "بناء",
+        "bg": "#141d2b",
+        "fg": "#e7b54a"
+      }
     }
   ]
 }
