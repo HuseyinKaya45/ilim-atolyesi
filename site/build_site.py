@@ -15,6 +15,17 @@ def manifest(ad,kisa,renk,bg,ide):
 def ikonlar(id,hedef):
     for a,b in (('192','icon-192.png'),('512','icon-512.png'),('180','icon-180.png'),('maskable-512','icon-maskable-512.png')):
         cp(os.path.join(D,'icons',f'{id}-{a}.png'),os.path.join(hedef,b))
+# --- ziyaret sayacı (GoatCounter; çerezsiz, kişisel veri tutmaz). programs.json → site.goatcounter boşsa eklenmez.
+GC=S.get('goatcounter','').strip()
+def sayac(y):
+    if not GC:return ''
+    return (f'\n<script data-goatcounter="https://{GC}.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>\n'
+      '<script>(function(){function gc(p,t){try{window.goatcounter&&window.goatcounter.count&&window.goatcounter.count({path:p,title:t,event:true})}catch(e){}}'
+      f'var y={json.dumps(y)};'
+      'addEventListener("appinstalled",function(){gc("ana-ekrana-eklendi/"+y,"Ana ekrana eklendi")});'
+      'addEventListener("load",function(){if(matchMedia("(display-mode: standalone)").matches)setTimeout(function(){gc("ana-ekrandan-acildi/"+y,"Ana ekrandan açıldı")},1500)});'
+      'document.addEventListener("click",function(e){var h=e.target.closest&&e.target.closest("[data-hazir]");if(h)gc("cevrimdisi-hazirla/"+h.dataset.hazir,"Çevrimdışı hazırla")});'
+      '})()</script>\n')
 sur={}
 # --- programlar
 for p in cfg['programlar']:
@@ -47,6 +58,7 @@ for p in cfg['programlar']:
         html+=(f'\n<nav aria-label="Diğer programlar" style="max-width:760px;margin:28px auto 24px;padding:14px 16px;border-top:1px solid rgba(128,128,128,.35);'
                f'text-align:center;font:15px/1.7 system-ui,sans-serif;color:inherit;opacity:.9">İlim Atölyesi’ndeki diğer programlar: {bag} · '
                f'<a href="../" style="color:inherit">Hepsi</a></nav>\n')
+    html+=sayac(p['id'])
     html+='\n<script>if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("../sw.js").catch(()=>{}))</script>\n'
     b=html.encode('utf-8');open(os.path.join(hedef,'index.html'),'wb').write(b);sur[p['id']]=sha(b)
     open(os.path.join(hedef,'manifest.webmanifest'),'w',encoding='utf-8').write(manifest(p['ad'],p.get('kisa',p['ad']),p['renk'],p['ikon']['bg'],p['id']))
@@ -55,6 +67,7 @@ kartlar=''.join(f'''<article class="kart" style="--r:{p['renk']}"><img src="{p['
 <div class="satir"><a class="btn" href="{p['id']}/">Aç</a><button class="btn ikincil" data-hazir="{p['id']}">Çevrimdışı hazırla</button><button class="btn ikincil" data-paylas="{p['id']}" data-ad="{p['ad']}">Paylaş</button></div><div class="dur" id="d-{p['id']}"></div></div></article>''' for p in cfg['programlar'])
 portal=open(os.path.join(D,'portal.html'),encoding='utf-8').read()
 for k,v in {'__BASLIK__':S['baslik'],'__ALT__':S['alt'],'__KREDI__':S['kredi'],'__DUA__':S['dua'],'__RENK__':S['renk'],'__KARTLAR__':kartlar,'__IDLER__':json.dumps([p['id'] for p in cfg['programlar']])}.items():portal=portal.replace(k,v)
+i=portal.rfind('</body>');portal=portal[:i]+sayac('portal')+portal[i:] if i>=0 else portal+sayac('portal')
 b=portal.encode('utf-8');open(os.path.join(OUT,'index.html'),'wb').write(b);sur['portal']=sha(b)
 ikonlar('portal',OUT)
 open(os.path.join(OUT,'manifest.webmanifest'),'w',encoding='utf-8').write(manifest(S['baslik'],S['baslik'],S['renk'],S['ikon']['bg'],'portal'))
